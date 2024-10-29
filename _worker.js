@@ -4233,7 +4233,7 @@ var worker_default = {
                 "CDN-Cache-Control": "no-store"
               }
             });
-          case "/panel":
+          case "/panels":
             const pwd = await env.bpb.get("pwd");
             const isAuth = await Authenticate(request, env);
             if (request.method === "POST") {
@@ -4267,7 +4267,7 @@ var worker_default = {
             }
             const loginAuth = await Authenticate(request, env);
             if (loginAuth)
-              return Response.redirect(`${url.origin}/panel`, 302);
+              return Response.redirect(`${url.origin}/panels`, 302);
             let secretKey = await env.bpb.get("secretKey");
             if (!secretKey) {
               secretKey = generateSecretKey();
@@ -4311,7 +4311,7 @@ var worker_default = {
                 "Content-Type": "text/plain"
               }
             });
-          case "/panel/password":
+          case "/panels/password":
             const oldPwd = await env.bpb.get("pwd");
             let passAuth = await Authenticate(request, env);
             if (oldPwd && !passAuth)
@@ -6235,7 +6235,7 @@ function renderHomePage(proxySettings, hostName, isPassSet) {
                     const refreshButtonVal = refreshBtn.innerHTML;
                     refreshBtn.innerHTML = '\u231B Loading...';
 
-                    const response = await fetch('/panel', {
+                    const response = await fetch('/panels', {
                         method: 'POST',
                         body: formData,
                         credentials: 'include'
@@ -6479,7 +6479,7 @@ function renderHomePage(proxySettings, hostName, isPassSet) {
                 const applyButtonVal = applyButton.value;
                 applyButton.value = '\u231B Loading...';
 
-                const response = await fetch('/panel', {
+                const response = await fetch('/panels', {
                     method: 'POST',
                     body: formData,
                     credentials: 'include'
@@ -6545,7 +6545,7 @@ function renderHomePage(proxySettings, hostName, isPassSet) {
             }
                     
             try {
-                const response = await fetch('/panel/password', {
+                const response = await fetch('/panels/password', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'text/plain'
@@ -6712,7 +6712,7 @@ function renderLoginPage() {
                 });
             
                 if (response.ok) {
-                    window.location.href = '/panel';
+                    window.location.href = '/panels';
                 } else {
                     passwordError.textContent = '\u26A0\uFE0F Wrong Password!';
                     const errorMessage = await response.text();
