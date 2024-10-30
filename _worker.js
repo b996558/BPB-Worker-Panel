@@ -4233,7 +4233,7 @@ var worker_default = {
                 "CDN-Cache-Control": "no-store"
               }
             });
-          case "/panels":
+          case "/admin-panel":
             const pwd = await env.bpb.get("pwd");
             const isAuth = await Authenticate(request, env);
             if (request.method === "POST") {
@@ -4245,7 +4245,7 @@ var worker_default = {
               return new Response("Success", { status: 200 });
             }
             if (pwd && !isAuth)
-              return Response.redirect(`${url.origin}/logins`, 302);
+              return Response.redirect(`${url.origin}/bt-admin`, 302);
             const isPassSet = pwd?.length >= 8;
             const homePage = renderHomePage(settings, host, isPassSet);
             return new Response(homePage, {
@@ -4260,14 +4260,14 @@ var worker_default = {
                 "Referrer-Policy": "strict-origin-when-cross-origin"
               }
             });
-          case "/logins":
+          case "/bt-admin":
             if (typeof env.bpb !== "object") {
               const errorPage = renderErrorPage("KV Dataset is not properly set!", null, true);
               return new Response(errorPage, { status: 200, headers: { "Content-Type": "text/html" } });
             }
             const loginAuth = await Authenticate(request, env);
             if (loginAuth)
-              return Response.redirect(`${url.origin}/panels`, 302);
+              return Response.redirect(`${url.origin}/admin-panel`, 302);
             let secretKey = await env.bpb.get("secretKey");
             if (!secretKey) {
               secretKey = generateSecretKey();
@@ -4311,7 +4311,7 @@ var worker_default = {
                 "Content-Type": "text/plain"
               }
             });
-          case "/panels/password":
+          case "/admin-panel/password":
             const oldPwd = await env.bpb.get("pwd");
             let passAuth = await Authenticate(request, env);
             if (oldPwd && !passAuth)
@@ -6235,7 +6235,7 @@ function renderHomePage(proxySettings, hostName, isPassSet) {
                     const refreshButtonVal = refreshBtn.innerHTML;
                     refreshBtn.innerHTML = '\u231B Loading...';
 
-                    const response = await fetch('/panels', {
+                    const response = await fetch('/admin-panel', {
                         method: 'POST',
                         body: formData,
                         credentials: 'include'
@@ -6479,7 +6479,7 @@ function renderHomePage(proxySettings, hostName, isPassSet) {
                 const applyButtonVal = applyButton.value;
                 applyButton.value = '\u231B Loading...';
 
-                const response = await fetch('/panels', {
+                const response = await fetch('/admin-panel', {
                     method: 'POST',
                     body: formData,
                     credentials: 'include'
@@ -6495,7 +6495,7 @@ function renderHomePage(proxySettings, hostName, isPassSet) {
                     const errorMessage = await response.text();
                     console.error(errorMessage, response.status);
                     alert('\u26A0\uFE0F Session expired! Please login again.');
-                    window.location.href = '/logins';
+                    window.location.href = '/bt-admin';
                 }           
             } catch (error) {
                 console.error('Error:', error);
@@ -6512,7 +6512,7 @@ function renderHomePage(proxySettings, hostName, isPassSet) {
                 });
             
                 if (response.ok) {
-                    window.location.href = '/logins';
+                    window.location.href = '/bt-admin';
                 } else {
                     console.error('Failed to log out:', response.status);
                 }
@@ -6545,7 +6545,7 @@ function renderHomePage(proxySettings, hostName, isPassSet) {
             }
                     
             try {
-                const response = await fetch('/panels/password', {
+                const response = await fetch('/admin-panel/password', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'text/plain'
@@ -6558,13 +6558,13 @@ function renderHomePage(proxySettings, hostName, isPassSet) {
                     modal.style.display = "none";
                     document.body.style.overflow = "";
                     alert("\u2705 Password changed successfully! \u{1F44D}");
-                    window.location.href = '/logins';
+                    window.location.href = '/bt-admin';
                 } else if (response.status === 401) {
                     const errorMessage = await response.text();
                     passwordError.textContent = '\u26A0\uFE0F ' + errorMessage;
                     console.error(errorMessage, response.status);
                     alert('\u26A0\uFE0F Session expired! Please login again.');
-                    window.location.href = '/logins';
+                    window.location.href = '/bt-admin';
                 } else {
                     const errorMessage = await response.text();
                     passwordError.textContent = '\u26A0\uFE0F ' + errorMessage;
@@ -6703,7 +6703,7 @@ function renderLoginPage() {
             const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch('/logins', {
+                const response = await fetch('/bt-admin', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'text/plain'
@@ -6712,7 +6712,7 @@ function renderLoginPage() {
                 });
             
                 if (response.ok) {
-                    window.location.href = '/panels';
+                    window.location.href = '/admin-panel';
                 } else {
                     passwordError.textContent = '\u26A0\uFE0F Wrong Password!';
                     const errorMessage = await response.text();
