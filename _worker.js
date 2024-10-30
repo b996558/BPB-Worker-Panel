@@ -5796,10 +5796,10 @@ function renderHomePage(proxySettings, hostName, isPassSet) {
                             </div>
                         </td>
                         <td>
-                            <button onclick="openQR('https://${hostName}/sub/${userID}#iKUN-YYDS', 'Normal Subscription')" style="margin-bottom: 8px;">
+                            <button onclick="openQR('https://${hostName}/sub/${userID}#MySite@as.x10.mx or mk.ikun6.us.kg', 'Normal Subscription')" style="margin-bottom: 8px;">
                                 QR Code&nbsp;<span class="material-symbols-outlined">qr_code</span>
                             </button>
-                            <button onclick="copyToClipboard('https://${hostName}/sub/${userID}#iKUN-YYDS', false)">
+                            <button onclick="copyToClipboard('https://${hostName}/sub/${userID}#MySite@as.x10.mx or mk.ikun6.us.kg', false)">
                                 Copy Sub<span class="material-symbols-outlined">format_list_bulleted</span>
                             </button>
                         </td>
@@ -5820,7 +5820,7 @@ function renderHomePage(proxySettings, hostName, isPassSet) {
                             </div>
                         </td>
                         <td>
-                            <button onclick="copyToClipboard('https://${hostName}/sub/${userID}?app=singbox#iKUN-YYDS', false)">
+                            <button onclick="copyToClipboard('https://${hostName}/sub/${userID}?app=singbox#MySite@as.x10.mx or mk.ikun6.us.kg', false)">
                                 Copy Sub<span class="material-symbols-outlined">format_list_bulleted</span>
                             </button>
                         </td>
